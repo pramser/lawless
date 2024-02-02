@@ -1,0 +1,207 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Items
+
+enum Rarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+  NOTORIOUS
+  INFAMOUS
+}
+
+// item base
+
+enum ItemType {
+  FIREARM
+  MELEE
+  GRENADE
+  SHIELD_MOD
+  TRAVERSAL_MOD
+  NECKBOMB_MOD
+  LUCKY_CHARM
+}
+
+model Item {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  // metadata
+  itemType      ItemType @default(FIREARM)
+  rarity        Rarity   @default(COMMON)
+  intrinsicPerk String?
+  flavorText    String?
+
+  // relationships
+  augments     Augment[]      @relation("ItemAugments")
+  fireArm      FireArm[]
+  melee        Melee[]
+  grenade      Grenade[]
+  shieldMod    ShieldMod[]
+  traversalMod TraversalMod[]
+  neckBombMod  NeckBombMod[]
+  luckyCharm   LuckyCharm[]
+  set          Set?           @relation(fields: [setId], references: [id])
+  setId        Int?
+}
+
+// firearm, melee, grenade, shieldmod, traversalmod, neckbombmod, luckycharm
+
+enum FireArmArchetype {
+  ASSAULT_RIFLE
+  HEAVY_WEAPON
+  PISTOL
+  SHOTGUN
+  SMG
+  SNIPER_RIFLE
+}
+
+enum FireArmManufacturer {
+  NONE
+  AMERTEK
+  GCPD_LOCKUP
+  LEXCORP
+  STAR_LABS
+  WAYNE_TECH
+}
+
+model FireArm {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  // metadata
+  manufacturer FireArmManufacturer @default(NONE)
+  fireArmArch  FireArmArchetype    @default(ASSAULT_RIFLE)
+
+  // stats
+  reloadTime        Float?
+  damagePerHit      Float?
+  criticalHitDamage Float?
+  magSize           Int?
+  rateOfFire        Float?
+
+  // relationships
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+model Melee {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  // relationships
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+model Grenade {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  // relationships
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+model ShieldMod {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  // relationships
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+model TraversalMod {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  // relationships
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+model NeckBombMod {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  // relationships
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+model LuckyCharm {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  // relationships
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+// Sets
+
+model Set {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  character  String
+  name       String
+  flavorText String?
+
+  // set information
+  requiredItems Int @default(1)
+  tier          Int @default(1)
+
+  // set perk
+  setPerk String?
+
+  // relationships
+  items Item[]
+}
+
+// Traits
+
+enum AugmentColor {
+  GREEN
+  BLUE
+  PURPLE
+}
+
+model Augment {
+  id           Int          @id @default(autoincrement())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  description  String
+  augmentColor AugmentColor @default(GREEN)
+  itemType     ItemType     @default(FIREARM)
+  fireArms     Item[]       @relation("ItemAugments")
+}
