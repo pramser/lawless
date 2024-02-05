@@ -26,8 +26,13 @@ export default async function ItemDetail({ params: { itemId } }: any) {
       <p>Intrinsic Perk: {item.intrinsicPerk}</p>
       <p>Flavor Text: {item.flavorText}</p>
 
-      <h2 className="mb-2 mt-4 text-xl underline">Set Information</h2>
-      <p>Set: {item.set?.name}</p>
+      {item.set && (
+        <div>
+          <h2 className="mb-2 mt-4 text-xl underline">Set Information</h2>
+          <p>Name: {item.set?.name}</p>
+          <p>Character: {item.set.character}</p>
+        </div>
+      )}
 
       <h2 className="mb-2 mt-4 text-xl underline">Augments</h2>
       <ul>
