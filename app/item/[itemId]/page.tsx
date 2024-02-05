@@ -52,7 +52,7 @@ export default async function ItemDetail({ params: { itemId } }: any) {
       )}
 
       <h2 className="mb-2 mt-4 text-xl underline">Augments</h2>
-      <table className="border-separate border-spacing-2 border border-slate-500 w-auto">
+      <table className="bg-black bg-opacity-40 border-separate border-spacing-2 border border-slate-500 w-auto">
         <tbody>
           {augments.map((augment) => (
             <tr key={augment.id}>
