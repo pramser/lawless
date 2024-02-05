@@ -3,7 +3,17 @@ import { prisma } from "db"
 import Link from "next/link"
 
 export default async function ItemDetail({ params: { itemId } }: any) {
-  const item = await prisma.item.findFirstOrThrow({ where: { id: parseInt(itemId) }, include: { set: true } })
+  const id = parseInt(itemId)
+
+  if (!id) {
+    return <main className="min-h-screen m-4">Invalid item ID</main>
+  }
+
+  const item = await prisma.item.findFirst({ where: { id }, include: { set: true } })
+  if (!item) {
+    return <main className="min-h-screen m-4">Item not found</main>
+  }
+
   const augments = await prisma.augment.findMany({ where: { itemType: item.itemType } })
 
   return (
