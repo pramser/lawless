@@ -10,8 +10,8 @@ export default function Stats({ stats }: StatsProps) {
       <tbody>
         {Object.keys(stats).map((key, i) => (
           <tr key={i} className="text-sm">
-            <td>{key}</td>
-            <td>{stats[key]?.toString()}</td>
+            <td className="uppercase">{key.replace(/_/g, " ")}</td>
+            <td>{stats[key]?.toString().replace(",", "-")}</td>
           </tr>
         ))}
       </tbody>
