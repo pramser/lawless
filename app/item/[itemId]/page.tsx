@@ -31,15 +31,24 @@ export default async function ItemDetail({ params: { itemId } }: any) {
           <h2 className="mb-2 mt-4 text-xl underline">Set Information</h2>
           <p>Name: {item.set?.name}</p>
           <p>Character: {item.set.character}</p>
+          <p>Flavor Text: {item.set.flavorText}</p>
+          <p>Perk: {item.set.perk}</p>
+          <p>Required Items: {item.set.requiredItems}</p>
+          <p>Tier: {item.set.tier}</p>
         </div>
       )}
 
       <h2 className="mb-2 mt-4 text-xl underline">Augments</h2>
-      <ul>
-        {augments.map((augment) => (
-          <li key={augment.id}>{augment.description}</li>
-        ))}
-      </ul>
+      <table className="border-separate border-spacing-2 border border-slate-500 w-2/4">
+        <tbody>
+          {augments.map((augment) => (
+            <tr key={augment.id}>
+              <td className={`augment-${augment.augmentColor.toLowerCase()} pl-2 text-2xl w-2`}>•</td>
+              <td className="text-sm">{augment.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </main>
   )
 }
