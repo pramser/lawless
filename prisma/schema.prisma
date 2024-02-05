@@ -25,6 +25,7 @@ enum Rarity {
 // item base
 
 enum ItemType {
+  UNKNOWN
   FIREARM
   MELEE
   GRENADE
@@ -34,43 +35,55 @@ enum ItemType {
   LUCKY_CHARM
 }
 
-model Item {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
+enum ItemSubType {
+  NONE
 
-  // metadata
-  itemType      ItemType @default(FIREARM)
-  rarity        Rarity   @default(COMMON)
-  intrinsicPerk String?
-  flavorText    String?
-
-  // relationships
-  augments     Augment[]      @relation("ItemAugments")
-  fireArm      FireArm[]
-  melee        Melee[]
-  grenade      Grenade[]
-  shieldMod    ShieldMod[]
-  traversalMod TraversalMod[]
-  neckBombMod  NeckBombMod[]
-  luckyCharm   LuckyCharm[]
-  set          Set?           @relation(fields: [setId], references: [id])
-  setId        Int?
-}
-
-// firearm, melee, grenade, shieldmod, traversalmod, neckbombmod, luckycharm
-
-enum FireArmArchetype {
+  // firearms
   ASSAULT_RIFLE
   HEAVY_WEAPON
   PISTOL
   SHOTGUN
   SMG
   SNIPER_RIFLE
+
+  // melee
+  BLUDGEON
+  BLADE
+  WRIST_CANNONS
+  BOOMERANG
+
+  // traversal mods
+  HARLEY_QUINN_MOD
+  KING_SHARK_MOD
+  CAPTAIN_BOOMERANG_MOD
+  DEADSHOT_MOD
 }
 
-enum FireArmManufacturer {
+enum ItemProgress {
+  IDENTIFIED
+  IN_REVIEW
+  COMPLETE
+}
+
+model Item {
+  id            Int          @id @default(autoincrement())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  name          String
+  itemProgress  ItemProgress @default(IDENTIFIED)
+  itemType      ItemType     @default(UNKNOWN)
+  itemSubType   ItemSubType  @default(NONE)
+  rarity        Rarity       @default(COMMON)
+  manufacturer  Manufacturer @default(NONE)
+  claps         Int          @default(0)
+  intrinsicPerk String?
+  flavorText    String?
+  stats         Json?
+  set           Set?         @relation(fields: [setId], references: [id])
+  setId         Int?
+}
+
+enum Manufacturer {
   NONE
   AMERTEK
   GCPD_LOCKUP
@@ -79,113 +92,19 @@ enum FireArmManufacturer {
   WAYNE_TECH
 }
 
-model FireArm {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-
-  // metadata
-  manufacturer FireArmManufacturer @default(NONE)
-  fireArmArch  FireArmArchetype    @default(ASSAULT_RIFLE)
-
-  // stats
-  reloadTime        Float?
-  damagePerHit      Float?
-  criticalHitDamage Float?
-  magSize           Int?
-  rateOfFire        Float?
-
-  // relationships
-  item   Item @relation(fields: [itemId], references: [id])
-  itemId Int
-}
-
-model Melee {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-
-  // relationships
-  item   Item @relation(fields: [itemId], references: [id])
-  itemId Int
-}
-
-model Grenade {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-
-  // relationships
-  item   Item @relation(fields: [itemId], references: [id])
-  itemId Int
-}
-
-model ShieldMod {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-
-  // relationships
-  item   Item @relation(fields: [itemId], references: [id])
-  itemId Int
-}
-
-model TraversalMod {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-
-  // relationships
-  item   Item @relation(fields: [itemId], references: [id])
-  itemId Int
-}
-
-model NeckBombMod {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-
-  // relationships
-  item   Item @relation(fields: [itemId], references: [id])
-  itemId Int
-}
-
-model LuckyCharm {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-
-  // relationships
-  item   Item @relation(fields: [itemId], references: [id])
-  itemId Int
-}
-
 // Sets
 
 model Set {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  character  String
-  name       String
-  flavorText String?
-
-  // set information
-  requiredItems Int @default(1)
-  tier          Int @default(1)
-
-  // set perk
-  setPerk String?
-
-  // relationships
-  items Item[]
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  character     String
+  name          String
+  flavorText    String?
+  requiredItems Int      @default(1)
+  tier          Int      @default(1)
+  perk          String?
+  items         Item[]
 }
 
 // Traits
@@ -202,6 +121,5 @@ model Augment {
   updatedAt    DateTime     @updatedAt
   description  String
   augmentColor AugmentColor @default(GREEN)
-  itemType     ItemType     @default(FIREARM)
-  fireArms     Item[]       @relation("ItemAugments")
+  itemType     ItemType     @default(UNKNOWN)
 }

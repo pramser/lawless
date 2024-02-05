@@ -11,8 +11,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 40, 40, 40;
+    --background-end-rgb: 0, 0, 00;
   }
 }
 
@@ -27,6 +27,66 @@ body {
   }
 }
 
+/* rarity border colors */
+.border-common {
+  @apply border-l-8 border-[#9b9b9b];
+}
+
+.border-uncommon {
+  @apply border-l-8 border-[#57ca47];
+}
+
+.border-rare {
+  @apply border-l-8 border-[#0070DD];
+}
+
+.border-epic {
+  @apply border-l-8 border-[#986fc5];
+}
+
+.border-legendary {
+  @apply border-l-8 border-[#FFD700];
+}
+
+.border-notorious {
+  @apply border-l-8 border-[#d45d9b];
+}
+
+.border-infamous {
+  @apply border-l-8 border-[#FF4500];
+}
+
+/* rarity text colors */
+
+.text-common {
+  @apply text-[#9b9b9b];
+}
+
+.text-uncommon {
+  @apply text-[#57ca47];
+}
+
+.text-rare {
+  @apply text-[#0070DD];
+}
+
+.text-epic {
+  @apply text-[#986fc5];
+}
+
+.text-legendary {
+  @apply text-[#FFD700];
+}
+
+.text-notorious {
+  @apply text-[#d45d9b];
+}
+
+.text-infamous {
+  @apply text-[#FF4500];
+}
+
+/* brand colors */
 .bg-brand-purple {
   @apply bg-[#C04CFD];
 }
