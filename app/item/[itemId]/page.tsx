@@ -44,10 +44,21 @@ export default async function ItemDetail({ params: { itemId } }: any) {
           <h2 className="mb-2 mt-4 text-xl underline">Set Information</h2>
           <p>Name: {item.set?.name}</p>
           <p>Character: {item.set.character}</p>
-          <p>Flavor Text: {item.set.flavorText}</p>
-          <p>Perk: {item.set.perk}</p>
           <p>Required Items: {item.set.requiredItems}</p>
           <p>Tier: {item.set.tier}</p>
+          <h3 className="font-medium mb-1 mt-2 text-lg">Flavor Text:</h3>
+          <p className="bg-black bg-opacity-40 border border-slate-500 italic p-4">{item.set.flavorText}</p>
+          <h3 className="font-medium mb-1 mt-2 text-lg">Perk:</h3>
+          <ul className="bg-black bg-opacity-40 border border-slate-500 p-4">
+            {item.set.perk
+              ?.substring(1)
+              .split("-")
+              .map((item, i) => (
+                <li key={i} className="mb-2">
+                  - {item}
+                </li>
+              ))}
+          </ul>
         </div>
       )}
 
