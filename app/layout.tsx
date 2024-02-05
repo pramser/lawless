@@ -1,8 +1,11 @@
+// next
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+
+// css
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+// components
+import Header from "@/Header"
 
 export const metadata: Metadata = {
   title: "lawless.gg",
@@ -16,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <Header />
+        <main className="min-h-screen m-4">{children}</main>
+      </body>
     </html>
   )
 }
