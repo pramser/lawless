@@ -5,7 +5,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Lawless.gg",
+  title: "lawless.gg",
   description: "Suicide Squad: Kill the Justice League Loot",
 }
 
