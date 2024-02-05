@@ -1,7 +1,5 @@
-import { JsonObject } from "@prisma/client/runtime/library"
-
 interface StatsProps {
-  stats: JsonObject
+  stats: any
 }
 
 export default function Stats({ stats }: StatsProps) {
