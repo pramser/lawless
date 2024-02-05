@@ -4,7 +4,7 @@ import Link from "next/link"
 
 export default async function ItemDetail({ params: { itemId } }: any) {
   const item = await prisma.item.findFirstOrThrow({ where: { id: parseInt(itemId) }, include: { set: true } })
-  const augments = await prisma.augment.findMany({ where: { augmentColor: "BLUE" } })
+  const augments = await prisma.augment.findMany({ where: { itemType: item.itemType } })
 
   return (
     <main className="flex flex-col flex-wrap min-h-screen m-4">
