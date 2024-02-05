@@ -1,3 +1,4 @@
+import Stats from "@/Stats"
 import { Manufacturer } from "@prisma/client"
 import { prisma } from "db"
 import Link from "next/link"
@@ -30,14 +31,33 @@ export default async function ItemDetail({ params: { itemId } }: any) {
         {item.manufacturer !== Manufacturer.NONE && ` | ${item.manufacturer} `} | {item.itemSubType ?? item.itemType}
       </p>
 
+      {item.stats && (
+        <div>
+          <h2 className="mb-2 mt-4 text-xl underline">Stats</h2>
+          <Stats stats={item.stats} />
+        </div>
+      )}
+
       <h2 className="mb-2 mt-4 text-xl underline">Basic Information</h2>
       <p>Entry: {item.itemProgress}</p>
       <p>Item Type: {item.itemType}</p>
       <p>Item Sub Type: {item.itemSubType}</p>
       <p>Item Rarity: {item.rarity}</p>
       <p>Manufacturer: {item.manufacturer}</p>
-      <p>Intrinsic Perk: {item.intrinsicPerk}</p>
-      <p>Flavor Text: {item.flavorText}</p>
+
+      {item.intrinsicPerk && (
+        <div>
+          <h3 className="font-medium mb-1 mt-2 text-lg">Intrinsic Perk:</h3>
+          <p className="bg-black bg-opacity-40 border border-slate-500 p-4">{item.intrinsicPerk}</p>
+        </div>
+      )}
+
+      {item.flavorText && (
+        <div>
+          <h3 className="font-medium mb-1 mt-2 text-lg">Flavor Text: </h3>
+          <p className="bg-black bg-opacity-40 border border-slate-500 italic p-4">{item.flavorText}</p>
+        </div>
+      )}
 
       {item.set && (
         <div>
