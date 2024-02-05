@@ -2,6 +2,9 @@ import { Manufacturer } from "@prisma/client"
 import { prisma } from "db"
 import Link from "next/link"
 
+// revalidate every hour
+export const revalidate = 3600
+
 export default async function ItemDetail({ params: { itemId } }: any) {
   const id = parseInt(itemId)
 
