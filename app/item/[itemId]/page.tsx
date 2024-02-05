@@ -82,16 +82,20 @@ export default async function ItemDetail({ params: { itemId } }: any) {
         </div>
       )}
 
-      <h2 className="mb-2 mt-4 text-xl underline">Possible Augments</h2>
-      <div className="bg-black bg-opacity-40 border-separate border-spacing-2 border border-slate-500 h-48 overflow-auto w-auto">
-        <ul>
-          {augments.map((augment) => (
-            <li className={`augment-${augment.augmentColor.toLowerCase()} m-2 text-2xl`}>
-              &nbsp;•&nbsp;<span className="text-sm text-white">{augment.description}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {augments && augments.length > 0 && (
+        <div>
+          <h2 className="mb-2 mt-4 text-xl underline">Possible Augments</h2>
+          <div className="bg-black bg-opacity-40 border-separate border-spacing-2 border border-slate-500 max-h-48 overflow-auto w-auto">
+            <ul>
+              {augments.map((augment, i) => (
+                <li key={i} className={`augment-${augment.augmentColor.toLowerCase()} m-2 text-2xl`}>
+                  &nbsp;•&nbsp;<span className="text-sm text-white">{augment.description}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
