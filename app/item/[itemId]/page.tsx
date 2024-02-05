@@ -83,16 +83,15 @@ export default async function ItemDetail({ params: { itemId } }: any) {
       )}
 
       <h2 className="mb-2 mt-4 text-xl underline">Possible Augments</h2>
-      <table className="bg-black bg-opacity-40 border-separate border-spacing-2 border border-slate-500 w-auto">
-        <tbody>
+      <div className="bg-black bg-opacity-40 border-separate border-spacing-2 border border-slate-500 h-48 overflow-auto w-auto">
+        <ul>
           {augments.map((augment) => (
-            <tr key={augment.id}>
-              <td className={`augment-${augment.augmentColor.toLowerCase()} pl-2 text-2xl w-2`}>•</td>
-              <td className="text-sm">{augment.description}</td>
-            </tr>
+            <li className={`augment-${augment.augmentColor.toLowerCase()} m-2 text-2xl`}>
+              &nbsp;•&nbsp;<span className="text-sm text-white">{augment.description}</span>
+            </li>
           ))}
-        </tbody>
-      </table>
+        </ul>
+      </div>
     </main>
   )
 }
