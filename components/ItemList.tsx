@@ -14,11 +14,16 @@ interface ItemListProps {}
 
 export default function ItemList({}: ItemListProps) {
   const [items, setItems] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
     fetch("/api/items")
       .then((res) => res.json())
-      .then((data) => setItems(data))
-  })
+      .then((data) => {
+        setItems(data)
+        setIsLoading(false)
+      })
+  }, [])
 
   const [selectedSortIndex, setSelectedSortIndex] = useState(0)
   let selectedSortMethod = SORT_METHODS[selectedSortIndex].method
@@ -26,6 +31,10 @@ export default function ItemList({}: ItemListProps) {
   const selectNextSortMethod = () => {
     var next = selectedSortIndex + 1
     setSelectedSortIndex(next === SORT_METHODS.length ? 0 : next)
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (
