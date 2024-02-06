@@ -36,7 +36,7 @@ export default async function ItemDetail({ params: { itemId } }: any) {
       <Link className="bg-white bg-opacity-10 hover:bg-opacity-20 border border-white py-1 px-2 mb-4 rounded-sm w-24" href="/">
         ↩ Back
       </Link>
-      <h1 className="border-b-2 font-medium text-3xl" style={oswald.style}>
+      <h1 className="border-b-2 font-medium text-3xl uppercase" style={oswald.style}>
         {item?.name}
       </h1>
       <p className="mt-2 text-white text-sm">
