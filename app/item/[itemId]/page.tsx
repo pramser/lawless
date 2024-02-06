@@ -1,10 +1,21 @@
-import Stats from "@/Stats"
+// next
+import Link from "next/link"
+import { Oswald } from "next/font/google"
+
+// db
 import { Manufacturer } from "@prisma/client"
 import { prisma } from "db"
-import Link from "next/link"
+
+// components
+import Stats from "@/Stats"
 
 // revalidate every hour
 export const revalidate = 3600
+
+const oswald = Oswald({
+  weight: "400",
+  subsets: ["latin"],
+})
 
 export default async function ItemDetail({ params: { itemId } }: any) {
   const id = parseInt(itemId)
@@ -22,10 +33,12 @@ export default async function ItemDetail({ params: { itemId } }: any) {
 
   return (
     <main className="flex flex-col flex-wrap min-h-screen m-4">
-      <Link className="bg-white bg-opacity-10 hover:bg-opacity-20 border border-white py-1 px-2 mb-4 rounded-md w-24" href="/">
+      <Link className="bg-white bg-opacity-10 hover:bg-opacity-20 border border-white py-1 px-2 mb-4 rounded-sm w-24" href="/">
         ↩ Back
       </Link>
-      <h1 className="border-b-2 font-medium text-xl">{item?.name}</h1>
+      <h1 className="border-b-2 font-medium text-3xl" style={oswald.style}>
+        {item?.name}
+      </h1>
       <p className="mt-2 text-white text-sm">
         <span className={`text-${item.rarity.toLowerCase()}`}>{item.rarity}</span>
         {item.manufacturer !== Manufacturer.NONE && ` | ${item.manufacturer} `} | {item.itemSubType ?? item.itemType}
