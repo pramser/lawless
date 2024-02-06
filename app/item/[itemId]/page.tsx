@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Oswald } from "next/font/google"
 
 // db
-import { Manufacturer } from "@prisma/client"
+import { ItemSubType, Manufacturer } from "@prisma/client"
 import { prisma } from "db"
 
 // components
@@ -39,9 +39,10 @@ export default async function ItemDetail({ params: { itemId } }: any) {
       <h1 className="border-b-2 font-medium text-3xl uppercase" style={oswald.style}>
         {item?.name}
       </h1>
-      <p className="mt-2 text-white text-sm">
+      <p className="mt-2 text-white text-md" style={oswald.style}>
         <span className={`text-${item.rarity.toLowerCase()}`}>{item.rarity}</span>
-        {item.manufacturer !== Manufacturer.NONE && ` | ${item.manufacturer} `} | {item.itemSubType ?? item.itemType}
+        {item.manufacturer !== Manufacturer.NONE && ` | ${item.manufacturer} `} |{" "}
+        {item.itemSubType === ItemSubType.NONE ? item.itemType : item.itemSubType}
       </p>
 
       {item.stats && (
@@ -53,10 +54,6 @@ export default async function ItemDetail({ params: { itemId } }: any) {
 
       <h2 className="mb-2 mt-4 text-xl underline">Basic Information</h2>
       <p>Entry: {item.itemProgress}</p>
-      <p>Item Type: {item.itemType}</p>
-      <p>Item Sub Type: {item.itemSubType}</p>
-      <p>Item Rarity: {item.rarity}</p>
-      <p>Manufacturer: {item.manufacturer}</p>
 
       {item.intrinsicPerk && (
         <div>
