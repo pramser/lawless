@@ -10,13 +10,13 @@ export const SORT_METHODS = [
   {
     name: "item_by_rarity",
     method: (a: Item, b: Item) => {
-      return a.rarity > b.rarity ? 1 : -1
+      return a.rarity.localeCompare(b.rarity) || a.name.localeCompare(b.name)
     },
   },
   {
     name: "item_by_type",
     method: (a: Item, b: Item) => {
-      return a.itemType > b.itemType ? 1 : -1
+      return a.itemType.localeCompare(b.itemType) || a.itemSubType.localeCompare(b.itemSubType)
     },
   },
   {
