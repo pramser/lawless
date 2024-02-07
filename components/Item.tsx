@@ -23,7 +23,7 @@ export default function Item({ item }: any) {
       <h1 className="font-medium text-ellipsis text-md truncate uppercase whitespace-nowrap" style={oswald.style}>
         {item.name}
       </h1>
-      <p className="text-white text-xs">
+      <p className="text-white text-ellipsis text-xs truncate whitespace-nowrap">
         <span className={`text-${item.rarity.toLowerCase()}`}>{item.rarity}</span> |{" "}
         {item.itemSubType === ItemSubType.NONE ? item.itemType : item.itemSubType}
       </p>

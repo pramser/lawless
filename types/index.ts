@@ -14,6 +14,12 @@ export const SORT_METHODS = [
     },
   },
   {
+    name: "item_by_type",
+    method: (a: Item, b: Item) => {
+      return a.itemType > b.itemType ? 1 : -1
+    },
+  },
+  {
     name: "created_old_to_new",
     method: (a: Item, b: Item) => {
       return a.createdAt > b.createdAt ? 1 : -1
