@@ -5,6 +5,7 @@ import { Oswald } from "next/font/google"
 // db
 import { ItemSubType } from "@prisma/client"
 import { prisma } from "db"
+import DetailPageHeading from "@/DetailPageHeading"
 
 // revalidate every hour
 export const revalidate = 3600
@@ -28,13 +29,7 @@ export default async function SetDetail({ params: { setId } }: any) {
 
   return (
     <main className="flex flex-col flex-wrap min-h-screen m-4">
-      <Link className="bg-white bg-opacity-10 hover:bg-opacity-20 border border-white py-1 px-2 mb-4 rounded-sm w-24" href="/">
-        ↩ Back
-      </Link>
-      <h1 className="border-b-2 font-medium text-3xl uppercase" style={oswald.style}>
-        {set?.name}
-      </h1>
-
+      <DetailPageHeading>{set?.name}</DetailPageHeading>
       <div>
         <h2 className="mb-2 mt-4 text-xl underline">Set Information</h2>
         <p>Name: {set?.name}</p>
@@ -63,7 +58,7 @@ export default async function SetDetail({ params: { setId } }: any) {
             <ul>
               {set.items.map((item, i) => (
                 <Link key={i} href={`/items/${item.id}`}>
-                  <li className="hover:bg-slate-600 m-2 text-md text-white">
+                  <li className="hover:bg-gray-400 m-2 text-md text-white">
                     {item.name} ({item.itemSubType === ItemSubType.NONE ? item.itemType : item.itemSubType})
                   </li>
                 </Link>

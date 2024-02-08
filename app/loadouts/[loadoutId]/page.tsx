@@ -5,6 +5,8 @@ import { Oswald } from "next/font/google"
 // db
 import { prisma } from "db"
 import { ItemSubType } from "@prisma/client"
+import BackButton from "@/BackButton"
+import DetailPageHeading from "@/DetailPageHeading"
 
 // revalidate every hour
 export const revalidate = 3600
@@ -47,14 +49,8 @@ export default async function LoadoutDetail({ params: { loadoutId } }: any) {
   }
 
   return (
-    <main className="flex flex-col flex-wrap min-h-screen mt-4 sm:m-4">
-      <Link className="bg-white bg-opacity-10 hover:bg-opacity-20 border border-white py-1 px-2 mb-4 rounded-sm w-24" href="/">
-        ↩ Back
-      </Link>
-      <h1 className="border-b-2 font-medium mb-4 text-3xl uppercase" style={oswald.style}>
-        {loadout?.name}
-      </h1>
-
+    <main className="flex flex-col flex-wrap min-h-screen">
+      <DetailPageHeading>{loadout?.name}</DetailPageHeading>
       <div className="flex flex-col flex-wrap sm:flex-row">
         {items.map((item) => (
           <div key={item.id} className="w-screen sm:w-1/2">

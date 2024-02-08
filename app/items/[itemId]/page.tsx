@@ -1,5 +1,4 @@
 // next
-import Link from "next/link"
 import { Oswald } from "next/font/google"
 
 // db
@@ -7,6 +6,7 @@ import { ItemSubType, Manufacturer } from "@prisma/client"
 import { prisma } from "db"
 
 // components
+import DetailPageHeading from "@/DetailPageHeading"
 import Stats from "@/Stats"
 
 // revalidate every hour
@@ -33,13 +33,8 @@ export default async function ItemDetail({ params: { itemId } }: any) {
 
   return (
     <main className="flex flex-col flex-wrap min-h-screen m-4">
-      <Link className="bg-white bg-opacity-10 hover:bg-opacity-20 border border-white py-1 px-2 mb-4 rounded-sm w-24" href="/">
-        ↩ Back
-      </Link>
-      <h1 className="border-b-2 font-medium text-3xl uppercase" style={oswald.style}>
-        {item?.name}
-      </h1>
-      <p className="mt-2 text-white text-md" style={oswald.style}>
+      <DetailPageHeading>{item?.name}</DetailPageHeading>
+      <p className="-mt-2 mx-2 text-white text-md" style={oswald.style}>
         <span className={`text-${item.rarity.toLowerCase()}`}>{item.rarity}</span>
         {item.manufacturer !== Manufacturer.NONE && ` | ${item.manufacturer} `} |{" "}
         {item.itemSubType === ItemSubType.NONE ? item.itemType : item.itemSubType}
