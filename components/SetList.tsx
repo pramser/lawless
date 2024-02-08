@@ -4,23 +4,23 @@
 import { useState, useEffect } from "react"
 
 // components
-import Item from "./Item"
+import Set from "./Set"
 import SortBar from "./SortBar"
 
 // types
 import { SORT_METHODS } from "types"
 
-interface ItemListProps {}
+interface SetListtProps {}
 
-export default function ItemList({}: ItemListProps) {
-  const [items, setItems] = useState([])
+export default function SetList({}: SetListtProps) {
+  const [sets, setSets] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetch("/api/items")
+    fetch("/api/sets")
       .then((res) => res.json())
       .then((data) => {
-        setItems(data)
+        setSets(data)
         setIsLoading(false)
       })
   }, [])
@@ -41,8 +41,8 @@ export default function ItemList({}: ItemListProps) {
     <section>
       <SortBar selectedSortName={SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
       <div className="flex flex-row flex-wrap">
-        {items.sort(selectedSortMethod).map((item: any) => (
-          <Item key={item.id} item={item} />
+        {sets.sort(selectedSortMethod).map((set: any) => (
+          <Set key={set.id} set={set} />
         ))}
       </div>
     </section>
