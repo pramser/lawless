@@ -1,6 +1,3 @@
-// next
-import { Oswald } from "next/font/google"
-
 // db
 import { ItemSubType, ItemType, Manufacturer } from "@prisma/client"
 
@@ -10,11 +7,6 @@ import { prisma } from "db"
 
 // revalidate every hour
 export const revalidate = 3600
-
-const oswald = Oswald({
-  weight: "400",
-  subsets: ["latin"],
-})
 
 export default async function NewItem() {
   const sets = await prisma.set.findMany({ where: { itemProgress: { not: "REQUESTED" } } })
@@ -45,6 +37,16 @@ export default async function NewItem() {
               {Object.values(ItemSubType).map((itemSubType) => (
                 <option key={itemSubType} value={itemSubType}>
                   {itemSubType}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="manufacturer">Manufactuer</label>
+            <select id="manufacturer" className="h-8 max-w-96 text-black">
+              {Object.values(Manufacturer).map((manufacturer) => (
+                <option key={manufacturer} value={manufacturer}>
+                  {manufacturer}
                 </option>
               ))}
             </select>
