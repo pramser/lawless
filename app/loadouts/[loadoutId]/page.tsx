@@ -57,7 +57,7 @@ export default async function LoadoutDetail({ params: { loadoutId } }: any) {
 
       <div className="flex flex-col flex-wrap sm:flex-row">
         {items.map((item) => (
-          <div className="w-screen sm:w-1/2">
+          <div key={item.id} className="w-screen sm:w-1/2">
             <h2>{item.itemType}</h2>
             <Link href={`/items/${item.id}`}>
               <div
