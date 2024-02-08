@@ -9,7 +9,10 @@ const oswald = Oswald({
 export default function DetailPageHeading({ children }: { children: React.ReactNode }) {
   return (
     <div className="border-b-2 flex flex-row justify-between mx-2 my-4">
-      <h1 className="font-medium text-3xl text-ellipsis truncate uppercase whitespace-nowrap" style={oswald.style}>
+      <h1
+        className="font-medium text-3xl max-w-64 sm:max-w-fit text-ellipsis truncate uppercase whitespace-nowrap"
+        style={oswald.style}
+      >
         {children}
       </h1>
       <BackButton />
