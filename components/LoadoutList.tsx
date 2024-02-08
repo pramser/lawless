@@ -8,7 +8,7 @@ import Loadout from "./Loadout"
 import SortBar from "./SortBar"
 
 // types
-import { SORT_METHODS } from "types"
+import { LOADOUT_SORT_METHODS } from "types"
 
 interface LoadoutListtProps {}
 
@@ -26,11 +26,11 @@ export default function LoadoutList({}: LoadoutListtProps) {
   }, [])
 
   const [selectedSortIndex, setSelectedSortIndex] = useState(0)
-  let selectedSortMethod = SORT_METHODS[selectedSortIndex].method
+  let selectedSortMethod = LOADOUT_SORT_METHODS[selectedSortIndex].method
 
   const selectNextSortMethod = () => {
     var next = selectedSortIndex + 1
-    setSelectedSortIndex(next === SORT_METHODS.length ? 0 : next)
+    setSelectedSortIndex(next === LOADOUT_SORT_METHODS.length ? 0 : next)
   }
 
   if (isLoading) {
@@ -39,7 +39,7 @@ export default function LoadoutList({}: LoadoutListtProps) {
 
   return (
     <section className="m-4">
-      <SortBar selectedSortName={SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
+      <SortBar selectedSortName={LOADOUT_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
       <div className="flex flex-row flex-wrap">
         {loadouts.sort(selectedSortMethod).map((loadout: any) => (
           <Loadout key={loadout.id} loadout={loadout} />

@@ -1,6 +1,6 @@
-import { Item } from "@prisma/client"
+import { Item, Loadout, Set } from "@prisma/client"
 
-export const SORT_METHODS = [
+export const ITEM_SORT_METHODS = [
   {
     name: "item_a_to_z",
     method: (a: Item, b: Item) => {
@@ -19,16 +19,28 @@ export const SORT_METHODS = [
       return a.itemType.localeCompare(b.itemType) || a.itemSubType.localeCompare(b.itemSubType)
     },
   },
+]
+
+export const SET_SORT_METHODS = [
   {
-    name: "created_old_to_new",
-    method: (a: Item, b: Item) => {
-      return a.createdAt > b.createdAt ? 1 : -1
+    name: "set_a_to_z",
+    method: (a: Set, b: Set) => {
+      return a.name > b.name ? 1 : -1
     },
   },
   {
-    name: "created_new_to_old",
-    method: (a: Item, b: Item) => {
-      return a.createdAt < b.createdAt ? 1 : -1
+    name: "set_by_tier",
+    method: (a: Set, b: Set) => {
+      return a.tier.toString().localeCompare(b.tier.toString()) || a.name.localeCompare(b.name)
+    },
+  },
+]
+
+export const LOADOUT_SORT_METHODS = [
+  {
+    name: "loadout_a_to_z",
+    method: (a: Loadout, b: Loadout) => {
+      return a.name > b.name ? 1 : -1
     },
   },
 ]

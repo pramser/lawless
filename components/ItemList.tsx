@@ -8,7 +8,7 @@ import Item from "./Item"
 import SortBar from "./SortBar"
 
 // types
-import { SORT_METHODS } from "types"
+import { ITEM_SORT_METHODS } from "types"
 
 interface ItemListProps {}
 
@@ -26,11 +26,11 @@ export default function ItemList({}: ItemListProps) {
   }, [])
 
   const [selectedSortIndex, setSelectedSortIndex] = useState(0)
-  let selectedSortMethod = SORT_METHODS[selectedSortIndex].method
+  let selectedSortMethod = ITEM_SORT_METHODS[selectedSortIndex].method
 
   const selectNextSortMethod = () => {
     var next = selectedSortIndex + 1
-    setSelectedSortIndex(next === SORT_METHODS.length ? 0 : next)
+    setSelectedSortIndex(next === ITEM_SORT_METHODS.length ? 0 : next)
   }
 
   if (isLoading) {
@@ -39,7 +39,7 @@ export default function ItemList({}: ItemListProps) {
 
   return (
     <section className="m-4">
-      <SortBar selectedSortName={SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
+      <SortBar selectedSortName={ITEM_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
       <div className="flex flex-row flex-wrap">
         {items.sort(selectedSortMethod).map((item: any) => (
           <Item key={item.id} item={item} />
