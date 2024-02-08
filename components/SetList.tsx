@@ -38,7 +38,7 @@ export default function SetList({}: SetListtProps) {
   }
 
   return (
-    <section>
+    <section className="m-4">
       <SortBar selectedSortName={SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
       <div className="flex flex-row flex-wrap">
         {sets.sort(selectedSortMethod).map((set: any) => (

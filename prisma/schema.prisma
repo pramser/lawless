@@ -107,7 +107,7 @@ model Set {
   items         Item[]
 }
 
-// Traits
+// Augments
 
 enum AugmentColor {
   GREEN
@@ -122,4 +122,22 @@ model Augment {
   description  String
   augmentColor AugmentColor @default(GREEN)
   itemType     ItemType     @default(UNKNOWN)
+}
+
+// Loadouts
+
+model Loadout {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  name          String
+  claps         Int      @default(0)
+  firearm_1     Int?
+  firearm_2     Int?
+  melee         Int?
+  grenade       Int?
+  shield_mod    Int?
+  traversal_mod Int?
+  neck_bomb_mod Int?
+  lucky_charm   Int?
 }

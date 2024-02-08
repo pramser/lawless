@@ -17,9 +17,13 @@ export default function Header({}: HeaderParams) {
       <Link href="/" className="cursor-default text-2xl" style={rock_salt.style}>
         lawless
       </Link>
-      .gg -&nbsp;
+      .gg&nbsp;-&nbsp;
       <Link href="/sets" className="underline">
         sets
+      </Link>
+      &nbsp;-&nbsp;
+      <Link href="/loadouts" className="underline">
+        loadouts
       </Link>
     </header>
   )
