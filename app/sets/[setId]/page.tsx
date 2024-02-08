@@ -62,8 +62,8 @@ export default async function SetDetail({ params: { setId } }: any) {
           <div className="bg-black bg-opacity-40 border-separate border-spacing-2 border border-slate-500 max-h-48 overflow-auto w-auto">
             <ul>
               {set.items.map((item, i) => (
-                <Link href={`/items/${item.id}`}>
-                  <li key={i} className="hover:bg-slate-600 m-2 text-md text-white">
+                <Link key={i} href={`/items/${item.id}`}>
+                  <li className="hover:bg-slate-600 m-2 text-md text-white">
                     {item.name} ({item.itemSubType === ItemSubType.NONE ? item.itemType : item.itemSubType})
                   </li>
                 </Link>
