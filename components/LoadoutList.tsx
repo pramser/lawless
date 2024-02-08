@@ -2,6 +2,7 @@
 
 // react
 import { useState, useEffect } from "react"
+import Link from "next/link"
 
 // components
 import Loadout from "./Loadout"
@@ -39,7 +40,9 @@ export default function LoadoutList({}: LoadoutListtProps) {
 
   return (
     <section className="m-4">
-      <SortBar selectedSortName={LOADOUT_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
+      <SortBar selectedSortName={LOADOUT_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod}>
+        <Link href="/loadouts/new">New Loadout</Link>
+      </SortBar>
       <div className="flex flex-row flex-wrap">
         {loadouts.sort(selectedSortMethod).map((loadout: any) => (
           <Loadout key={loadout.id} loadout={loadout} />

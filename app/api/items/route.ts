@@ -4,6 +4,6 @@ import { prisma } from "db"
 export const revalidate = 1800
 
 export async function GET() {
-  const items = await prisma.item.findMany()
+  const items = await prisma.item.findMany({ where: { itemProgress: { not: "REQUESTED" } } })
   return Response.json(items)
 }

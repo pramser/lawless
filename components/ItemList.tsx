@@ -2,6 +2,7 @@
 
 // react
 import { useState, useEffect } from "react"
+import Link from "next/link"
 
 // components
 import Item from "./Item"
@@ -39,7 +40,9 @@ export default function ItemList({}: ItemListProps) {
 
   return (
     <section className="m-4">
-      <SortBar selectedSortName={ITEM_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
+      <SortBar selectedSortName={ITEM_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod}>
+        <Link href="/items/new">New Item</Link>
+      </SortBar>
       <div className="flex flex-row flex-wrap">
         {items.sort(selectedSortMethod).map((item: any) => (
           <Item key={item.id} item={item} />

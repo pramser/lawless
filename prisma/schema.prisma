@@ -60,6 +60,7 @@ enum ItemSubType {
 }
 
 enum ItemProgress {
+  REQUESTED
   IDENTIFIED
   IN_REVIEW
   COMPLETE
@@ -95,14 +96,15 @@ enum Manufacturer {
 // Sets
 
 model Set {
-  id            Int      @id @default(autoincrement())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id            Int          @id @default(autoincrement())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   character     String
   name          String
+  itemProgress  ItemProgress @default(IDENTIFIED)
   flavorText    String?
-  requiredItems Int      @default(1)
-  tier          Int      @default(1)
+  requiredItems Int          @default(1)
+  tier          Int          @default(1)
   perk          String?
   items         Item[]
 }
@@ -127,11 +129,12 @@ model Augment {
 // Loadouts
 
 model Loadout {
-  id            Int      @id @default(autoincrement())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id            Int          @id @default(autoincrement())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   name          String
-  claps         Int      @default(0)
+  itemProgress  ItemProgress @default(IDENTIFIED)
+  claps         Int          @default(0)
   firearm_1     Int?
   firearm_2     Int?
   melee         Int?

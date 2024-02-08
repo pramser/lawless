@@ -2,6 +2,7 @@
 
 // react
 import { useState, useEffect } from "react"
+import Link from "next/link"
 
 // components
 import Set from "./Set"
@@ -39,7 +40,9 @@ export default function SetList({}: SetListtProps) {
 
   return (
     <section className="m-4">
-      <SortBar selectedSortName={SET_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
+      <SortBar selectedSortName={SET_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod}>
+        <Link href="/sets/new">New Set</Link>
+      </SortBar>
       <div className="flex flex-row flex-wrap">
         {sets.sort(selectedSortMethod).map((set: any) => (
           <Set key={set.id} set={set} />
