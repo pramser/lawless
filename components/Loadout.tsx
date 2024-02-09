@@ -27,6 +27,7 @@ export default function Loadout({ loadout }: LoadoutProps) {
       <h1 className="font-medium text-ellipsis text-md truncate uppercase whitespace-nowrap" style={oswald.style}>
         {loadout.name}
       </h1>
+      <p className="text-white text-ellipsis text-xs truncate whitespace-nowrap">{loadout.character}</p>
     </div>
   )
 }

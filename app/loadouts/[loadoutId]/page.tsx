@@ -4,8 +4,9 @@ import { Oswald } from "next/font/google"
 
 // db
 import { prisma } from "db"
-import { ItemSubType } from "@prisma/client"
-import BackButton from "@/BackButton"
+import { ItemSubType, Prisma } from "@prisma/client"
+
+// components
 import DetailPageHeading from "@/DetailPageHeading"
 
 // revalidate every hour
@@ -48,10 +49,15 @@ export default async function LoadoutDetail({ params: { loadoutId } }: any) {
     return <main className="min-h-screen m-4">Loadout not found</main>
   }
 
+  const augments = loadout.augments as Prisma.JsonArray
+
   return (
     <main className="flex flex-col flex-wrap min-h-screen">
       <DetailPageHeading>{loadout?.name}</DetailPageHeading>
-      <div className="flex flex-col flex-wrap sm:flex-row">
+      <p className="-mt-2 mx-2 text-white text-md" style={oswald.style}>
+        LOADOUT | {loadout?.character}
+      </p>
+      <div className="flex flex-col flex-wrap sm:flex-row mt-4">
         {items.map((item) => (
           <div key={item.id} className="w-screen sm:w-1/2">
             <h2>{item.itemType}</h2>
@@ -68,6 +74,14 @@ export default async function LoadoutDetail({ params: { loadoutId } }: any) {
                 </p>
               </div>
             </Link>
+            {augments &&
+              augments
+                .filter((a: any) => a.itemId === item.id)
+                .map((augment: any, i) => (
+                  <div key={i} className={`augment-${augment.augmentColor.toLowerCase()} bg-black bg-opacity-40 m-2 p-3`}>
+                    <span className="text-white">{augment.description}</span>
+                  </div>
+                ))}
           </div>
         ))}
       </div>

@@ -12,6 +12,13 @@ datasource db {
 
 // Items
 
+enum Characters {
+  HARLEY_QUINN
+  KING_SHARK
+  CAPTAIN_BOOMERANG
+  DEADSHOT
+}
+
 enum Rarity {
   COMMON
   UNCOMMON
@@ -134,7 +141,9 @@ model Loadout {
   updatedAt     DateTime     @updatedAt
   name          String
   itemProgress  ItemProgress @default(IDENTIFIED)
+  character     Characters   @default(HARLEY_QUINN)
   claps         Int          @default(0)
+  augments      Json?
   firearm_1     Int?
   firearm_2     Int?
   melee         Int?

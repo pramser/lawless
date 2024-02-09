@@ -10,7 +10,7 @@ export default function DetailPageHeading({ children }: { children: React.ReactN
   return (
     <div className="border-b-2 flex flex-row justify-between mx-2 my-4">
       <h1
-        className="font-medium max-w-64 sm:max-w-fit text-ellipsis text-xl sm:text-3xl truncate uppercase whitespace-nowrap"
+        className="font-medium max-w-64 sm:max-w-fit text-ellipsis text-2xl sm:text-3xl truncate uppercase whitespace-nowrap"
         style={oswald.style}
       >
         {children}
