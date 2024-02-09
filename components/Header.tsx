@@ -22,6 +22,10 @@ export default function Header({}: HeaderParams) {
         items
       </Link>
       &nbsp;-&nbsp;
+      <Link href="/sets" className="underline">
+        sets
+      </Link>
+      &nbsp;-&nbsp;
       <Link href="/loadouts" className="underline">
         loadouts
       </Link>

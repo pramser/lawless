@@ -40,9 +40,7 @@ export default function SetList({}: SetListtProps) {
 
   return (
     <section className="m-4">
-      <SortBar selectedSortName={SET_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod}>
-        <Link href="/sets/new">New Set</Link>
-      </SortBar>
+      <SortBar selectedSortName={SET_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod} />
       <div className="flex flex-row flex-wrap">
         {sets.sort(selectedSortMethod).map((set: any) => (
           <Set key={set.id} set={set} />

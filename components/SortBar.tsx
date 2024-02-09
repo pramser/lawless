@@ -1,7 +1,7 @@
 "use client"
 
 type SortBarParams = {
-  children: React.ReactNode
+  children?: React.ReactNode
   selectedSortName: string
   sortButtonOnClick: any
 }
