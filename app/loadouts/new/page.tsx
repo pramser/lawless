@@ -44,7 +44,7 @@ export default async function NewLoadout() {
         </fieldset>
         <div className="flex flex-col flex-wrap sm:flex-row mt-4">
           {sections.map((section: any) => (
-            <fieldset className="bg-black bg-opacity-40 w-screen sm:w-1/2">
+            <fieldset key={section.name} className="bg-black bg-opacity-40 w-screen sm:w-1/2">
               <legend className="ml-4">{section.name}</legend>
               <div className="flex flex-col m-2 p-3">
                 <label>Item</label>
