@@ -18,8 +18,8 @@ export default function Header({}: HeaderParams) {
         lawless
       </Link>
       .gg&nbsp;-&nbsp;
-      <Link href="/sets" className="underline">
-        sets
+      <Link href="/" className="underline">
+        items
       </Link>
       &nbsp;-&nbsp;
       <Link href="/loadouts" className="underline">
