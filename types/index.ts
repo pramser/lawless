@@ -43,6 +43,12 @@ export const LOADOUT_SORT_METHODS = [
       return a.name > b.name ? 1 : -1
     },
   },
+  {
+    name: "loadout_by_character",
+    method: (a: Loadout, b: Loadout) => {
+      return a.character.localeCompare(b.character) || a.name.localeCompare(b.name)
+    },
+  },
 ]
 
 export const LOADOUT_SECTIONS = [

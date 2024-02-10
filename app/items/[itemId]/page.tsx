@@ -72,14 +72,9 @@ export default async function ItemDetail({ params: { itemId } }: any) {
           <p>Character: {item.set.character}</p>
           <p>Required Items: {item.set.requiredItems}</p>
           <p>Tier: {item.set.tier}</p>
-          <p className="m-2">
-            <Link
-              className="bg-white bg-opacity-10 hover:bg-opacity-20 border border-white p-2 rounded-xs"
-              href={`/sets/${item.set.id}`}
-            >
-              Go to Set
-            </Link>
-          </p>
+          <Link className="styled-button" href={`/sets/${item.set.id}`}>
+            View Set
+          </Link>
           <h3 className="font-medium mb-1 mt-2 text-lg">Flavor Text:</h3>
           <p className="bg-black bg-opacity-40 border border-slate-500 italic p-4">{item.set.flavorText}</p>
           <h3 className="font-medium mb-1 mt-2 text-lg">Perk:</h3>

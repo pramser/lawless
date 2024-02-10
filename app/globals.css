@@ -13,6 +13,10 @@ body {
   }
 }
 
+.styled-button {
+  @apply bg-blue-900 hover:bg-blue-700 border border-white font-medium ml-4 px-4 py-1 rounded-sm text-xs sm:text-sm truncate;
+}
+
 /* rarity border colors */
 .border-common {
   @apply border-l-8 border-[#9b9b9b];

@@ -42,8 +42,12 @@ export default function LoadoutList({}: LoadoutListtProps) {
   return (
     <section className="m-4">
       <SortBar selectedSortName={LOADOUT_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod}>
-        <button onClick={() => setIsRequested(!isRequested)}>Show Requests</button>
-        <Link href="/loadouts/new">New Loadout</Link>
+        <button className="styled-button" onClick={() => setIsRequested(!isRequested)}>
+          {isRequested ? "Hide Requests" : "Show Requests"}
+        </button>
+        <Link className="styled-button" href="/loadouts/new">
+          New Loadout
+        </Link>
       </SortBar>
       <div className="flex flex-row flex-wrap">
         {loadouts.sort(selectedSortMethod).map((loadout: any) => (

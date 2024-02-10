@@ -42,8 +42,12 @@ export default function ItemList({}: ItemListProps) {
   return (
     <section className="m-4">
       <SortBar selectedSortName={ITEM_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod}>
-        <button onClick={() => setIsRequested(!isRequested)}>Show Requests</button>
-        <Link href="/items/new">New Item</Link>
+        <button className="styled-button" onClick={() => setIsRequested(!isRequested)}>
+          {isRequested ? "Hide Requests" : "Show Requests"}
+        </button>
+        <Link className="styled-button" href="/items/new">
+          New Item
+        </Link>
       </SortBar>
       <div className="flex flex-row flex-wrap">
         {items.sort(selectedSortMethod).map((item: any) => (
