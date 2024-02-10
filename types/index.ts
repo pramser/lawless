@@ -1,4 +1,4 @@
-import { Item, Loadout, Set } from "@prisma/client"
+import { Item, ItemType, Loadout, Set } from "@prisma/client"
 
 export const ITEM_SORT_METHODS = [
   {
@@ -43,4 +43,15 @@ export const LOADOUT_SORT_METHODS = [
       return a.name > b.name ? 1 : -1
     },
   },
+]
+
+export const LOADOUT_SECTIONS = [
+  { name: "firearm_1", itemType: ItemType.FIREARM },
+  { name: "firearm_2", itemType: ItemType.FIREARM },
+  { name: "melee", itemType: ItemType.MELEE },
+  { name: "grenade", itemType: ItemType.GRENADE },
+  { name: "shield_mod", itemType: ItemType.SHIELD_MOD },
+  { name: "traversal_mod", itemType: ItemType.TRAVERSAL_MOD },
+  { name: "neck_bomb_mod", itemType: ItemType.NECKBOMB_MOD },
+  { name: "lucky_charm", itemType: ItemType.LUCKY_CHARM },
 ]

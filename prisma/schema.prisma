@@ -66,7 +66,7 @@ enum ItemSubType {
   DEADSHOT_MOD
 }
 
-enum ItemProgress {
+enum Progress {
   REQUESTED
   IDENTIFIED
   IN_REVIEW
@@ -78,7 +78,7 @@ model Item {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   name          String
-  itemProgress  ItemProgress @default(IDENTIFIED)
+  progress      Progress     @default(IDENTIFIED)
   itemType      ItemType     @default(UNKNOWN)
   itemSubType   ItemSubType  @default(NONE)
   rarity        Rarity       @default(COMMON)
@@ -103,15 +103,15 @@ enum Manufacturer {
 // Sets
 
 model Set {
-  id            Int          @id @default(autoincrement())
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   character     String
   name          String
-  itemProgress  ItemProgress @default(IDENTIFIED)
+  progress      Progress @default(IDENTIFIED)
   flavorText    String?
-  requiredItems Int          @default(1)
-  tier          Int          @default(1)
+  requiredItems Int      @default(1)
+  tier          Int      @default(1)
   perk          String?
   items         Item[]
 }
@@ -136,20 +136,13 @@ model Augment {
 // Loadouts
 
 model Loadout {
-  id            Int          @id @default(autoincrement())
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  name          String
-  itemProgress  ItemProgress @default(IDENTIFIED)
-  character     Characters   @default(HARLEY_QUINN)
-  claps         Int          @default(0)
-  augments      Json?
-  firearm_1     Int?
-  firearm_2     Int?
-  melee         Int?
-  grenade       Int?
-  shield_mod    Int?
-  traversal_mod Int?
-  neck_bomb_mod Int?
-  lucky_charm   Int?
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  name      String
+  progress  Progress   @default(IDENTIFIED)
+  character Characters @default(HARLEY_QUINN)
+  claps     Int        @default(0)
+  data      Json?
+  version   Int        @default(1)
 }

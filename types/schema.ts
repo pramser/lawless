@@ -1,12 +1,12 @@
 // db
-import { ItemType, ItemSubType, Manufacturer, Rarity } from "@prisma/client"
+import { ItemType, ItemSubType, Manufacturer, Rarity, Characters } from "@prisma/client"
 
 // zod
 import { z } from "zod"
 
 export const postItem = z.object({
   name: z.string(),
-  itemProgress: z.literal("REQUESTED"),
+  progress: z.literal("REQUESTED"),
   rarity: z.nativeEnum(Rarity),
   itemType: z.nativeEnum(ItemType),
   itemSubType: z.nativeEnum(ItemSubType),
@@ -14,4 +14,12 @@ export const postItem = z.object({
   setId: z.number().optional(),
   intrinsicPerk: z.string().optional(),
   flavorText: z.string().optional(),
+})
+
+export const postLoadout = z.object({
+  name: z.string(),
+  progress: z.literal("REQUESTED"),
+  character: z.nativeEnum(Characters),
+  data: z.string(),
+  version: z.number(),
 })

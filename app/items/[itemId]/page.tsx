@@ -49,7 +49,7 @@ export default async function ItemDetail({ params: { itemId } }: any) {
       )}
 
       <h2 className="mb-2 mt-4 text-xl underline">Basic Information</h2>
-      <p>Entry: {item.itemProgress}</p>
+      <p>Entry: {item.progress}</p>
 
       {item.intrinsicPerk && (
         <div>

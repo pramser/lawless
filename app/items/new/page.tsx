@@ -14,7 +14,7 @@ import DetailPageHeading from "@/DetailPageHeading"
 export const revalidate = 3600
 
 export default async function NewItem() {
-  const sets = await prisma.set.findMany({ where: { itemProgress: { not: "REQUESTED" } } })
+  const sets = await prisma.set.findMany({ where: { progress: { not: "REQUESTED" } } })
 
   async function requestItem(formData: FormData) {
     "use server"
