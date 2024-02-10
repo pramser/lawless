@@ -33,10 +33,12 @@ export default async function LoadoutDetail({ params: { loadoutId } }: any) {
 
   return (
     <main className="flex flex-col flex-wrap min-h-screen">
-      <DetailPageHeading>{loadout?.name}</DetailPageHeading>
-      <p className="-mt-2 mx-2 text-white text-md" style={oswald.style}>
-        LOADOUT | {loadout?.character}
-      </p>
+      <div className="m-4">
+        <DetailPageHeading>{loadout?.name}</DetailPageHeading>
+        <p className="-mt-2 mx-2 text-white text-md" style={oswald.style}>
+          LOADOUT | {loadout?.character}
+        </p>
+      </div>
       <LoadoutDetails data={data} />
     </main>
   )

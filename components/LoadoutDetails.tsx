@@ -15,7 +15,7 @@ export default function LoadoutDetails({ data }: LoadoutDetailsProps) {
   return (
     <div className="flex flex-col flex-wrap sm:flex-row mt-4">
       {data.map((slot: Slot) => (
-        <div key={slot.name} className="w-screen sm:w-1/2">
+        <div key={slot.name} className="px-4 w-screen sm:w-1/2">
           <h2>{slot.name}</h2>
           <ItemSlot itemId={slot.itemId} />
           {slot.augments &&
