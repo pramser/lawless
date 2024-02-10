@@ -1,5 +1,10 @@
+// next
+import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
+
 // db
 import { Characters, ItemType } from "@prisma/client"
+import { postLoadout } from "types/schema"
 import { prisma } from "db"
 
 // components
@@ -9,14 +14,14 @@ import DetailPageHeading from "@/DetailPageHeading"
 export const revalidate = 3600
 
 const sections = [
-  { name: "FIREARM 1", itemType: ItemType.FIREARM },
-  { name: "FIREARM 2", itemType: ItemType.FIREARM },
-  { name: "MELEE", itemType: ItemType.MELEE },
-  { name: "GRENADE", itemType: ItemType.GRENADE },
-  { name: "SHIELD MOD", itemType: ItemType.SHIELD_MOD },
-  { name: "TRAVERSAL MOD", itemType: ItemType.TRAVERSAL_MOD },
-  { name: "NECK BOMB MOD", itemType: ItemType.NECKBOMB_MOD },
-  { name: "LUCKY CHARM", itemType: ItemType.LUCKY_CHARM },
+  { name: "firearm_1", itemType: ItemType.FIREARM },
+  { name: "firearm_2", itemType: ItemType.FIREARM },
+  { name: "melee", itemType: ItemType.MELEE },
+  { name: "grenade", itemType: ItemType.GRENADE },
+  { name: "shield_mod", itemType: ItemType.SHIELD_MOD },
+  { name: "traversal_mod", itemType: ItemType.TRAVERSAL_MOD },
+  { name: "neck_bomb_mod", itemType: ItemType.NECKBOMB_MOD },
+  { name: "lucky_charm", itemType: ItemType.LUCKY_CHARM },
 ]
 
 const colors = ["GREEN", "BLUE", "PURPLE"]
@@ -25,21 +30,55 @@ export default async function NewLoadout() {
   const items = await prisma.item.findMany()
   const augments = await prisma.augment.findMany()
 
+  async function requestLoadout(formData: FormData) {
+    "use server"
+
+    // set itemProgress to REQUESTED
+    formData.append("progress", "REQUESTED")
+    formData.append("version", "1")
+
+    // convert formData to json
+    const json = Object.fromEntries(formData)
+    let postData = postLoadout.parse(json)
+
+    let data: any[] = []
+    sections.forEach((section) => {
+      const augments = colors.map((color) => {
+        const key = `${section.name}.augments.${color}`
+        return json[key] !== "None" ? { color, description: json[key] } : null
+      })
+      data.push({
+        name: section.name,
+        itemId: json[`${section.name}.itemId`],
+        augments,
+      })
+    })
+
+    // create data
+    const loadout = await prisma.loadout.create({ data: { ...postData, data } })
+
+    // revalidate cache and redirect
+    revalidatePath("/")
+    redirect(`/loadouts/${loadout.id}`)
+  }
+
   return (
     <main className="flex flex-col flex-wrap min-h-screen">
       <DetailPageHeading>New Loadout Request</DetailPageHeading>
-      <form>
+      <form action={requestLoadout}>
         <fieldset className="bg-black bg-opacity-40 m-4 p-2">
           <legend>Basic Details</legend>
           <div className="flex flex-col">
             <label>Name</label>
-            <input name="name" type="text" />
+            <input name="name" type="text" className="text-black" />
           </div>
           <div className="flex flex-col">
             <label>Character</label>
             <select name="character" className="text-black">
               {Object.values(Characters).map((character) => (
-                <option value={character}>{character}</option>
+                <option key={character} value={character}>
+                  {character}
+                </option>
               ))}
             </select>
           </div>
@@ -61,7 +100,7 @@ export default async function NewLoadout() {
                 </select>
                 <label>Augments</label>
                 {colors.map((color) => (
-                  <select name={`${section.name}.augments.${color}`} className="text-black">
+                  <select key={color} name={`${section.name}.augments.${color}`} className="text-black">
                     <option value="None">None</option>
                     {augments
                       .filter((a) => a.itemType === section.itemType && a.augmentColor === color)
@@ -75,6 +114,7 @@ export default async function NewLoadout() {
               </div>
             </fieldset>
           ))}
+          <button type="submit">Request Loadout</button>
         </div>
       </form>
     </main>

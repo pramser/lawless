@@ -12,11 +12,24 @@ const oswald = Oswald({
 })
 
 interface ItemSlotProps {
-  itemId: number
+  itemId: string
 }
 
 export default async function ItemSlot({ itemId }: ItemSlotProps) {
-  const item = await prisma.item.findFirst({ where: { id: itemId } })
+  if (!itemId) {
+    return (
+      <div
+        className={`bg-black bg-opacity-40 hover:bg-gray-400 border-common flex flex-col h-24 items-center justify-center m-2 p-3`}
+      >
+        <h2 className="text-2xl uppercase" style={oswald.style}>
+          No Item
+        </h2>
+      </div>
+    )
+  }
+
+  const id = parseInt(itemId)
+  const item = await prisma.item.findFirst({ where: { id } })
 
   return (
     <Link href={`/items/${itemId}`}>

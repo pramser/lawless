@@ -20,6 +20,6 @@ export const postLoadout = z.object({
   name: z.string(),
   progress: z.literal("REQUESTED"),
   character: z.nativeEnum(Characters),
-  data: z.string(),
-  version: z.number(),
+  data: z.string().optional(),
+  version: z.coerce.number(),
 })
