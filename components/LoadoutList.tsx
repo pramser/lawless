@@ -15,16 +15,17 @@ interface LoadoutListtProps {}
 
 export default function LoadoutList({}: LoadoutListtProps) {
   const [loadouts, setLoadouts] = useState([])
+  const [isRequested, setIsRequested] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetch("/api/loadouts")
+    fetch(`/api/loadouts?isRequested=${isRequested}`)
       .then((res) => res.json())
       .then((data) => {
         setLoadouts(data)
         setIsLoading(false)
       })
-  }, [])
+  }, [isRequested])
 
   const [selectedSortIndex, setSelectedSortIndex] = useState(0)
   let selectedSortMethod = LOADOUT_SORT_METHODS[selectedSortIndex].method
@@ -41,6 +42,7 @@ export default function LoadoutList({}: LoadoutListtProps) {
   return (
     <section className="m-4">
       <SortBar selectedSortName={LOADOUT_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod}>
+        <button onClick={() => setIsRequested(!isRequested)}>Show Requests</button>
         <Link href="/loadouts/new">New Loadout</Link>
       </SortBar>
       <div className="flex flex-row flex-wrap">

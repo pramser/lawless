@@ -15,16 +15,17 @@ interface ItemListProps {}
 
 export default function ItemList({}: ItemListProps) {
   const [items, setItems] = useState([])
+  const [isRequested, setIsRequested] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetch("/api/items")
+    fetch(`/api/items?isRequested=${isRequested}`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data)
         setIsLoading(false)
       })
-  }, [])
+  }, [isRequested])
 
   const [selectedSortIndex, setSelectedSortIndex] = useState(0)
   let selectedSortMethod = ITEM_SORT_METHODS[selectedSortIndex].method
@@ -41,6 +42,7 @@ export default function ItemList({}: ItemListProps) {
   return (
     <section className="m-4">
       <SortBar selectedSortName={ITEM_SORT_METHODS[selectedSortIndex].name} sortButtonOnClick={selectNextSortMethod}>
+        <button onClick={() => setIsRequested(!isRequested)}>Show Requests</button>
         <Link href="/items/new">New Item</Link>
       </SortBar>
       <div className="flex flex-row flex-wrap">

@@ -20,7 +20,7 @@ export default async function NewItem() {
     "use server"
 
     // set itemProgress to REQUESTED
-    formData.append("itemProgress", "REQUESTED")
+    formData.append("progress", "REQUESTED")
 
     // convert formData to json
     const json = Object.fromEntries(formData)
