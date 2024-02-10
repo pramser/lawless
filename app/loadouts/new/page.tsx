@@ -1,8 +1,5 @@
-// next
-import { Oswald } from "next/font/google"
-
 // db
-import { ItemSubType, ItemType, Manufacturer } from "@prisma/client"
+import { Characters, ItemType } from "@prisma/client"
 import { prisma } from "db"
 
 // components
@@ -10,11 +7,6 @@ import DetailPageHeading from "@/DetailPageHeading"
 
 // revalidate every hour
 export const revalidate = 3600
-
-const oswald = Oswald({
-  weight: "400",
-  subsets: ["latin"],
-})
 
 const sections = [
   { name: "FIREARM 1", itemType: ItemType.FIREARM },
@@ -27,6 +19,8 @@ const sections = [
   { name: "LUCKY CHARM", itemType: ItemType.LUCKY_CHARM },
 ]
 
+const colors = ["GREEN", "BLUE", "PURPLE"]
+
 export default async function NewLoadout() {
   const items = await prisma.item.findMany()
   const augments = await prisma.augment.findMany()
@@ -38,8 +32,16 @@ export default async function NewLoadout() {
         <fieldset className="bg-black bg-opacity-40 m-4 p-2">
           <legend>Basic Details</legend>
           <div className="flex flex-col">
-            <p>Name</p>
-            <p>Character</p>
+            <label>Name</label>
+            <input name="name" type="text" />
+          </div>
+          <div className="flex flex-col">
+            <label>Character</label>
+            <select name="character" className="text-black">
+              {Object.values(Characters).map((character) => (
+                <option value={character}>{character}</option>
+              ))}
+            </select>
           </div>
         </fieldset>
         <div className="flex flex-col flex-wrap sm:flex-row mt-4">
@@ -48,7 +50,7 @@ export default async function NewLoadout() {
               <legend className="ml-4">{section.name}</legend>
               <div className="flex flex-col m-2 p-3">
                 <label>Item</label>
-                <select className="text-black">
+                <select name={`${section.name}.itemId`} className="text-black">
                   {items
                     .filter((it) => it.itemType === section.itemType)
                     .map((item) => (
@@ -58,33 +60,18 @@ export default async function NewLoadout() {
                     ))}
                 </select>
                 <label>Augments</label>
-                <select className="text-black">
-                  {augments
-                    .filter((au) => au.itemType === section.itemType && au.augmentColor === "GREEN")
-                    .map((augment) => (
-                      <option key={augment.id} value={augment.id}>
-                        {augment.description}
-                      </option>
-                    ))}
-                </select>
-                <select className="text-black">
-                  {augments
-                    .filter((au) => au.itemType === section.itemType && au.augmentColor === "BLUE")
-                    .map((augment) => (
-                      <option key={augment.id} value={augment.id}>
-                        {augment.description}
-                      </option>
-                    ))}
-                </select>
-                <select className="text-black">
-                  {augments
-                    .filter((au) => au.itemType === section.itemType && au.augmentColor === "PURPLE")
-                    .map((augment) => (
-                      <option key={augment.id} value={augment.id}>
-                        {augment.description}
-                      </option>
-                    ))}
-                </select>
+                {colors.map((color) => (
+                  <select name={`${section.name}.augments.${color}`} className="text-black">
+                    <option value="None">None</option>
+                    {augments
+                      .filter((a) => a.itemType === section.itemType && a.augmentColor === color)
+                      .map((augment) => (
+                        <option key={augment.id} value={augment.description}>
+                          {augment.description}
+                        </option>
+                      ))}
+                  </select>
+                ))}
               </div>
             </fieldset>
           ))}
